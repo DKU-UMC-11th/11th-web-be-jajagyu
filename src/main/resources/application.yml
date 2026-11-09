@@ -12,3 +12,6 @@ spring:
     open-in-view: false
 server:
   port: 8080
+jwt:
+  secret: ${JWT_SECRET} # 서명에 쓸 비밀키(32자 이상). 코드에 직접 쓰지 않는다
+  access-expiration: ${JWT_ACCESS_EXPIRATION} # 토큰 유효시간(초)

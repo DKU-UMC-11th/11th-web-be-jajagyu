@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         String cause = String.valueOf(exception.getMostSpecificCause().getMessage());
         ApiResponse<Void> body;
         if (cause.contains("uk_rating_member_movie")) {
-            body = ApiResponse.failure("RATING4091", "이미 이 영화에 평점을 남기셨습니다.");
+            body = ApiResponse.failure("RATING409_1","이미 이 영화에 평점을 남기셨습니다.");
         } else if (cause.contains("member.email")) {
             body = ApiResponse.failure("MEMBER4091", "이미 사용 중인 이메일입니다.");
         } else if (cause.contains("member.nickname")) {
