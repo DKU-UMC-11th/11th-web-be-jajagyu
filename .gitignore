@@ -43,3 +43,5 @@ out/
 infra/**/.ids
 infra/**/.instance
 infra/**/.ip
+
+infra/.alb_dns
