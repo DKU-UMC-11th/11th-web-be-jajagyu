@@ -340,13 +340,13 @@
     },
     {
       "type": "timeseries",
-      "title": "이벤트 루프 지연",
+      "title": "Hikari 대기 요청 수 (pending)",
       "id": 7,
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "올라가면 동기 작업이 루프를 막고 있다는 뜻입니다.",
+      "description": "커넥션 풀에서 커넥션을 기다리는 요청 수. 0 이 아니면 풀이 부족한 것입니다. (Spring 용 대체 지표)",
       "gridPos": {
         "x": 8,
         "y": 10,
@@ -366,7 +366,7 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "s",
+          "unit": "short",
           "min": 0,
           "custom": {
             "lineWidth": 2,
@@ -390,7 +390,7 @@
     },
     {
       "type": "timeseries",
-      "title": "힙 사용량",
+      "title": "JVM 힙 사용량",
       "id": 8,
       "datasource": {
         "type": "prometheus",

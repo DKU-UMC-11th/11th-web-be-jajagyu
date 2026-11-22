@@ -1,0 +1,178 @@
+[
+  {
+    "rps": 200,
+    "runId": "5ea58f38-e3ed-4ba8-8e5d-2dc3d3b8ab32",
+    "start": 1795351715,
+    "end": 1795351757,
+    "summary": {
+      "runId": "5ea58f38-e3ed-4ba8-8e5d-2dc3d3b8ab32",
+      "status": "finished",
+      "startedAt": 1795351715185,
+      "finishedAt": 1795351755216,
+      "scenarioName": "한계 측정 200rps",
+      "totals": {
+        "sent": 7995,
+        "success": 7995,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 0,
+        "dropped": 5
+      },
+      "percentiles": {
+        "p50": 30,
+        "p95": 175,
+        "p99": 367,
+        "max": 771,
+        "count": 7995
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 1601,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 363
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": []
+    }
+  },
+  {
+    "rps": 400,
+    "runId": "80a5238f-6f79-419e-97bc-292782c9b18e",
+    "start": 1795351787,
+    "end": 1795351830,
+    "summary": {
+      "runId": "80a5238f-6f79-419e-97bc-292782c9b18e",
+      "status": "finished",
+      "startedAt": 1795351787941,
+      "finishedAt": 1795351827988,
+      "scenarioName": "한계 측정 400rps",
+      "totals": {
+        "sent": 15273,
+        "success": 15273,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 8,
+        "dropped": 726
+      },
+      "percentiles": {
+        "p50": 27,
+        "p95": 90,
+        "p99": 406,
+        "max": 1396,
+        "count": 15273
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 3185,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 54
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": [
+        "dropped"
+      ]
+    }
+  },
+  {
+    "rps": 600,
+    "runId": "767cfccb-2279-4532-9bb7-aba37d0e488a",
+    "start": 1795351860,
+    "end": 1795351902,
+    "summary": {
+      "runId": "767cfccb-2279-4532-9bb7-aba37d0e488a",
+      "status": "finished",
+      "startedAt": 1795351860695,
+      "finishedAt": 1795351900724,
+      "scenarioName": "한계 측정 600rps",
+      "totals": {
+        "sent": 23823,
+        "success": 23823,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 0,
+        "dropped": 177
+      },
+      "percentiles": {
+        "p50": 24,
+        "p95": 59,
+        "p99": 140,
+        "max": 490,
+        "count": 23823
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 4739,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 141
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": []
+    }
+  },
+  {
+    "rps": 800,
+    "runId": "96ca0b37-8f76-492c-9f79-0ef47a14a4f1",
+    "start": 1795351933,
+    "end": 1795351975,
+    "summary": {
+      "runId": "96ca0b37-8f76-492c-9f79-0ef47a14a4f1",
+      "status": "finished",
+      "startedAt": 1795351933297,
+      "finishedAt": 1795351973361,
+      "scenarioName": "한계 측정 800rps",
+      "totals": {
+        "sent": 30234,
+        "success": 30234,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 0,
+        "dropped": 1765
+      },
+      "percentiles": {
+        "p50": 28,
+        "p95": 119,
+        "p99": 234,
+        "max": 636,
+        "count": 30234
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 6165,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 73
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": [
+        "dropped"
+      ]
+    }
+  }
+]
