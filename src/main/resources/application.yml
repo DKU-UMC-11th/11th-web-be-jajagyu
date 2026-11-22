@@ -6,6 +6,9 @@ spring:
     timeout-per-shutdown-phase: 20s
   application:
     name: movie
+  datasource:
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10} # 기본 10(Hikari 기본값). 3주차에서 환경 변수로만 바꿔 비교한다
   jpa:
     hibernate:
       ddl-auto: validate # 기본값은 "기존 스키마를 검증만" 한다. 운영 데이터를 자동으로 바꾸지 않는다.
@@ -19,3 +22,16 @@ jwt:
 frontend:
   # 배포된 프론트 주소(Origin). 쉼표로 여러 개를 적을 수 있다. 스킴과 호스트만, 뒤에 경로를 붙이지 않는다.
   origin: ${FRONTEND_ORIGIN:}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus # prometheus 를 직접 열어야 /actuator/prometheus 가 생긴다
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true # 없으면 히스토그램 버킷이 아니라 합계만 나온다
+      slo:
+        http.server.requests: 50ms,100ms,200ms,300ms,500ms,800ms,1500ms,3s
