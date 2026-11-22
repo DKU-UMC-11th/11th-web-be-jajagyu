@@ -47,6 +47,9 @@
 
 ### 화면과 설정 증거
 - Swagger 화면(EC2 주소): `screenshots/01-swagger-on-ec2.png`
+- 빌드와 테스트 통과(터미널): `screenshots/02-terminal-gradle-build-success.png` (`BUILD SUCCESSFUL`, 테스트 14개 실패 0)
+- 배포 주소 핵심 요청/응답(터미널, 토큰 가림): `screenshots/03-terminal-api-check-deployed.png` (회원가입 201, 로그인 200, 토큰 없이 401, 평점·즐겨찾기 201, 중복 409, 검증 400)
+- AWS 콘솔 EC2 실행 중 화면: `screenshots/04-aws-console-ec2-running.png` (계정 ID 가림)
 - 보안 그룹 인바운드, RDS `PubliclyAccessible: false`, EC2 키 페어 없음: `aws-config-check.txt` (CLI 출력)
 - 비용: Cost Explorer로 11월 일별 비용을 조회했더니 이번 실습 전까지 0달러였고, 오늘 사용분은 반영까지 약 하루가 걸려 아직 보이지 않았음. 정리 뒤 며칠 지나 다시 확인해야 함.
 
