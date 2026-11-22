@@ -1,0 +1,585 @@
+{
+  "info": {
+    "name": "UMC 8주차 - 즐겨찾기 / 영화 기록",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "email",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": "Test1234!"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "0-1. 회원가입 (매번 새 계정 생성)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set('email', 'w8_' + Date.now() + '@example.com');"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status 201', () => pm.response.to.have.status(201));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"nickname\": \"neon\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/members",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "members"
+          ]
+        }
+      }
+    },
+    {
+      "name": "0-2. 로그인 (토큰 자동 저장)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status 200', () => pm.response.to.have.status(200));",
+              "pm.collectionVariables.set('token', pm.response.json().result.accessToken);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "1. POST /favorites 성공 (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 201\", () => pm.response.to.have.status(201));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 550\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/favorites",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "favorites"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. POST /favorites 중복 (409 FAVORITE409_1)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 409\", () => pm.response.to.have.status(409));",
+              "pm.test(\"code FAVORITE409_1\", () => pm.expect(pm.response.json().code).to.eql(\"FAVORITE409_1\"));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 550\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/favorites",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "favorites"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. GET /favorites 내 목록 (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/favorites",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "favorites"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. GET /favorites/550 (isFavorite: true)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+              "pm.test('isFavorite true', () => pm.expect(pm.response.json().result.isFavorite).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/favorites/550",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "favorites",
+            "550"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. DELETE /favorites/550 해제 (200, result null)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/favorites/550",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "favorites",
+            "550"
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. GET /favorites/550 (isFavorite: false)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+              "pm.test('isFavorite false', () => pm.expect(pm.response.json().result.isFavorite).to.eql(false));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/favorites/550",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "favorites",
+            "550"
+          ]
+        }
+      }
+    },
+    {
+      "name": "7. GET /favorites 빈 배열 (200, [])",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/favorites",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "favorites"
+          ]
+        }
+      }
+    },
+    {
+      "name": "8. POST /movie-records 성공 (201, rating + favorite)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 201\", () => pm.response.to.have.status(201));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 238,\n  \"score\": 5,\n  \"comment\": \"다시 보고 싶은 영화입니다.\",\n  \"addToFavorites\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/movie-records",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "movie-records"
+          ]
+        }
+      }
+    },
+    {
+      "name": "9. POST /movie-records 중복 (409 RATING409_1)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 409\", () => pm.response.to.have.status(409));",
+              "pm.test(\"code RATING409_1\", () => pm.expect(pm.response.json().code).to.eql(\"RATING409_1\"));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 238,\n  \"score\": 5,\n  \"comment\": \"다시 보고 싶은 영화입니다.\",\n  \"addToFavorites\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/movie-records",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "movie-records"
+          ]
+        }
+      }
+    },
+    {
+      "name": "── 실습 4: 실패 상황 ──",
+      "item": [
+        {
+          "name": "A. 토큰 없이 POST /favorites (401 AUTH401_2)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 401\", () => pm.response.to.have.status(401));",
+                  "pm.test(\"code AUTH401_2\", () => pm.expect(pm.response.json().code).to.eql(\"AUTH401_2\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movieId\": 550\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/favorites",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "favorites"
+              ]
+            }
+          }
+        },
+        {
+          "name": "B. 즐겨찾기 안 한 영화 여부 (200, false)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/favorites/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "favorites",
+                "999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "C. 없는 즐겨찾기 해제 (404 FAVORITE404_1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"code FAVORITE404_1\", () => pm.expect(pm.response.json().code).to.eql(\"FAVORITE404_1\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/favorites/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "favorites",
+                "999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "D. movieId 0 전송 (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"status 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"movieId\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/favorites",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "favorites"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
