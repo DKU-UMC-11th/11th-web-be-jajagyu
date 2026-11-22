@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# 10주차: 키 파일과 운영 환경 파일은 올리지 않는다
+*.pem
+.env.local
+.env.production
+infra/**/.ids
+infra/**/.instance
+infra/**/.ip

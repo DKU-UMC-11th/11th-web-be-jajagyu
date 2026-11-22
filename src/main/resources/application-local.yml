@@ -1,0 +1,7 @@
+# 내 컴퓨터에서 개발할 때(기본 프로필). 값은 Git에 올리지 않는 로컬 환경 변수에서 읽는다.
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PW}

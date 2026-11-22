@@ -1,0 +1,49 @@
+## 보안 그룹 인바운드
+[
+    {
+        "name": "umc10-db-sg",
+        "inbound": [
+            {
+                "port": 3306,
+                "cidr": [],
+                "fromSG": [
+                    "sg-00a119afe25725a13"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "umc10-app-sg",
+        "inbound": [
+            {
+                "port": 80,
+                "cidr": [
+                    "0.0.0.0/0"
+                ],
+                "fromSG": []
+            },
+            {
+                "port": 8080,
+                "cidr": [
+                    "0.0.0.0/0"
+                ],
+                "fromSG": []
+            }
+        ]
+    }
+]
+## RDS
+{
+    "class": "db.t3.micro",
+    "engine": "mysql",
+    "public": false,
+    "status": "available"
+}
+## EC2
+[
+    {
+        "type": "t3.small",
+        "keyName": null,
+        "state": "running"
+    }
+]
