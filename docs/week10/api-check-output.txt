@@ -1,0 +1,13 @@
+1. 회원가입                  POST /members                201  {"isSuccess":true,"code":"COMMON201","message":"회원가입에 성공했습니다.","result":{"memberId":2,"email":"w10_<n>@example.com","nickname":"w10_<n>"}}
+2. 로그인                   POST /auth/login             200  {"isSuccess":true,"code":"COMMON200","message":"로그인에 성공했습니다.","result":{"accessToken":"***masked***"}}
+3-a. 토큰 없이 내 정보          GET /members/me              401  {"isSuccess":false,"code":"AUTH401_2","message":"로그인이 필요한 요청입니다.","result":null}
+3-b. 토큰으로 내 정보           GET /members/me              200  {"isSuccess":true,"code":"COMMON200","message":"회원 정보를 조회했습니다.","result":{"email":"w10_<n>@example.com","nickname":"w10_<n>","createdAt":"2026-1
+4-a. 평점 등록               POST /ratings                201  {"isSuccess":true,"code":"COMMON201","message":"평점을 등록했습니다.","result":{"ratingId":2,"movieId":550,"score":5,"comment":"배포 점검","createdAt":"2026-11-22T
+4-b. 유저별 평점 조회(공개)       GET /members/2/ratings       200  [{"ratingId":2,"movieId":550,"score":5,"comment":"배포 점검","createdAt":"2026-11-22T04:29:38","updatedAt":"2026-11-22T04:29:38"}]
+5-a. 즐겨찾기 빈 목록           GET /favorites               200  {"isSuccess":true,"code":"COMMON200","message":"내 즐겨찾기 목록을 조회했습니다.","result":[]}
+5-b. 즐겨찾기 등록             POST /favorites              201  {"isSuccess":true,"code":"COMMON201","message":"즐겨찾기를 등록했습니다.","result":{"favoriteId":2,"movieId":550,"createdAt":"2026-11-22T04:29:38.834838"}}
+5-c. 즐겨찾기 여부             GET /favorites/550           200  {"isSuccess":true,"code":"COMMON200","message":"즐겨찾기 여부를 조회했습니다.","result":{"isFavorite":true}}
+5-d. 즐겨찾기 목록             GET /favorites               200  {"isSuccess":true,"code":"COMMON200","message":"내 즐겨찾기 목록을 조회했습니다.","result":[{"favoriteId":2,"movieId":550,"createdAt":"2026-11-22T04:29:39"}]}
+6-a. 즐겨찾기 중복             POST /favorites              409  {"isSuccess":false,"code":"FAVORITE409_1","message":"이미 이 영화를 즐겨찾기하셨습니다.","result":null}
+6-b. 평점 중복               POST /ratings                409  {"isSuccess":false,"code":"RATING409_1","message":"이미 이 영화에 평점을 남기셨습니다.","result":null}
+6-c. 검증 실패(movieId 0)    POST /favorites              400  {"isSuccess":false,"code":"COMMON4001","message":"영화 ID는 양수여야 합니다.","result":null}

@@ -1,0 +1,14 @@
+# 운영(EC2 + RDS). SPRING_PROFILES_ACTIVE=prod 로 실행한다.
+# 비밀번호와 JWT 키는 파일에 적지 않고 EC2 실행 환경에서 전달한다.
+server:
+  address: 0.0.0.0
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}:3306/${DB_NAME:umc_movie}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate # 운영 데이터는 앱 시작 시 자동으로 변경하지 않는다.

@@ -2,10 +2,15 @@ package com.umc.movie.config;
 
 import com.umc.movie.interceptor.AuthInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -13,11 +18,22 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final AuthInterceptor authInterceptor;
 
+    // 배포된 프론트 주소. 환경 변수 FRONTEND_ORIGIN 으로 전달하고, 쉼표로 여러 개를 적을 수 있다.
+    @Value("${frontend.origin:}")
+    private String frontendOrigin;
+
     // 5주차 CORS 설정. 토큰을 Authorization 헤더로 보내므로 OPTIONS(사전 요청)도 허용한다.
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        // 로컬 개발 주소(5173: Vite, 3000: Next.js)는 계속 허용하고, 운영 프론트 주소를 더한다.
+        List<String> origins = new ArrayList<>(List.of("http://localhost:5173", "http://localhost:3000"));
+        Arrays.stream(frontendOrigin.split(","))
+                .map(String::trim)
+                .filter(origin -> !origin.isEmpty())
+                .forEach(origins::add);
+
         registry.addMapping("/**") // 모든 경로에 대해
-                .allowedOrigins("http://localhost:5173", "http://localhost:3000") // 이 출처에서 오는 요청만 허용 (3000: 9주차 Next.js)
+                .allowedOrigins(origins.toArray(String[]::new)) // 이 출처에서 오는 요청만 허용
                 .allowedMethods("GET", "POST", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
     }
