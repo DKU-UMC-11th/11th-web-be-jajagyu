@@ -8,8 +8,8 @@
 | 스택 | Spring Boot (JAR), Java 21 |
 | 서버 | EC2 `t3.small` (Amazon Linux 2023), 리전 ap-northeast-2 |
 | DB | RDS MySQL 8.0 `db.t3.micro`, DB 이름 `umc_movie`, 퍼블릭 액세스 꺼짐 |
-| API 주소 | `http://3.35.241.115:8080` (80 포트도 8080으로 연결). 실습이 끝나면 삭제되는 임시 주소임 |
-| 문서 | `http://3.35.241.115:8080/swagger-ui.html` |
+| API 주소 | `http://15.165.39.171:8080` (80 포트도 8080으로 연결). 실습이 끝나면 삭제되는 임시 주소임(점검 기록 `api-check-output.txt`는 첫 배포 주소로 찍었고, 재배포 뒤 주소가 바뀜) |
+| 문서 | `http://15.165.39.171:8080/swagger-ui.html` |
 
 ### 핵심 API 점검 (공개 주소, `api-check-output.txt`)
 토큰과 비밀번호는 출력하지 않았고 `***masked***`로 가렸음.
@@ -44,6 +44,11 @@
 - 예상 비용(서울 리전 기준 대략): EC2 t3.small 시간당 약 0.03달러, RDS db.t3.micro 시간당 약 0.02달러, 스토리지 20GB는 월 몇 달러 수준. 몇 시간 쓰면 수백~천 원대이고, 안 지우면 하루에 몇 천 원씩 나감.
 - 모든 리소스에 `Project=umc-w10` 태그를 붙였음.
 - 정리 순서: 점검과 캡처 → `infra/week10/99-cleanup.sh`로 **EC2 종료 → RDS 삭제(스냅샷 없음) → 보안 그룹 → S3 버킷 → SSM 파라미터 → IAM** 삭제 → 콘솔에서 남은 스토리지와 스냅샷이 없는지 확인.
+
+### 화면과 설정 증거
+- Swagger 화면(EC2 주소): `screenshots/01-swagger-on-ec2.png`
+- 보안 그룹 인바운드, RDS `PubliclyAccessible: false`, EC2 키 페어 없음: `aws-config-check.txt` (CLI 출력)
+- 비용: Cost Explorer로 11월 일별 비용을 조회했더니 이번 실습 전까지 0달러였고, 오늘 사용분은 반영까지 약 하루가 걸려 아직 보이지 않았음. 정리 뒤 며칠 지나 다시 확인해야 함.
 
 ## 구성 파일
 - `src/main/resources/application*.yml`: 환경 분리

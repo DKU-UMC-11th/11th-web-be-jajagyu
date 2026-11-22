@@ -19,7 +19,7 @@ ing $DB_SG 3306 --source-group $APP_SG # DB는 EC2 보안 그룹에서 오는 �
 DBPW=$(openssl rand -hex 14); JWT=$(openssl rand -hex 32)
 put() { aws ssm put-parameter --name /umc10/$1 --value "$2" --type ${3:-String} --overwrite >/dev/null; }
 put db-user umc; put db-password "$DBPW" SecureString; put jwt-secret "$JWT" SecureString
-put frontend-origin "${FRONTEND_ORIGIN:-https://umcine.vercel.app}"
+put frontend-origin "${FRONTEND_ORIGIN:-https://umcine-chi.vercel.app}"
 
 # 결과물(JAR, 스키마) 전달용 비공개 버킷
 BUCKET=umc10-artifacts-$ACCT
