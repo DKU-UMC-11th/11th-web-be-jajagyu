@@ -35,3 +35,4 @@ time(UTC) desired inservice target_healthy high_alarms(cpu/mem) asg_cpu_avg% asg
 14:54:37 3 3 3 OK/OK 2.522 39.34
 14:55:20 3 3 3 OK/OK 2.411 39.20
 14:56:15 3 3 3 OK/OK 2.411 39.24
+14:57:18 3 3 3 OK/OK 2.680 39.15
