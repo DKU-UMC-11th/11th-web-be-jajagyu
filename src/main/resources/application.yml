@@ -9,6 +9,7 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: ${DB_POOL_SIZE:10} # 기본 10(Hikari 기본값). 3주차에서 환경 변수로만 바꿔 비교한다
+      connection-timeout: ${DB_CONN_TIMEOUT:30000} # 풀에서 커넥션을 기다리는 최대 시간(ms). 기본 30초(Hikari 기본값)
   jpa:
     hibernate:
       ddl-auto: validate # 기본값은 "기존 스키마를 검증만" 한다. 운영 데이터를 자동으로 바꾸지 않는다.
