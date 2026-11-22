@@ -1,0 +1,204 @@
+[
+  {
+    "rps": 300,
+    "runId": "493d2711-3226-450d-a63b-59639e5c4778",
+    "start": 1795356335,
+    "end": 1795357176,
+    "summary": {
+      "runId": "493d2711-3226-450d-a63b-59639e5c4778",
+      "status": "finished",
+      "startedAt": 1795356335550,
+      "finishedAt": 1795357175534,
+      "scenarioName": "한계 측정 300rps",
+      "totals": {
+        "sent": 242337,
+        "success": 241468,
+        "failure": 869,
+        "byType": {
+          "network": 0,
+          "timeout": 869,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 2976,
+        "dropped": 9649
+      },
+      "percentiles": {
+        "p50": 18,
+        "p95": 67,
+        "p99": 1738,
+        "max": 5002,
+        "count": 241468
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 2398,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 24
+      },
+      "outages": [
+        {
+          "startTs": 1795356687051,
+          "endTs": 1795356687063,
+          "durationMs": 12,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356687302,
+          "endTs": 1795356687315,
+          "durationMs": 13,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356689441,
+          "endTs": 1795356689453,
+          "durationMs": 12,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356690320,
+          "endTs": 1795356690333,
+          "durationMs": 13,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356691890,
+          "endTs": 1795356691903,
+          "durationMs": 13,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356692210,
+          "endTs": 1795356692225,
+          "durationMs": 15,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356692371,
+          "endTs": 1795356692383,
+          "durationMs": 12,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356692534,
+          "endTs": 1795356692545,
+          "durationMs": 11,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356693787,
+          "endTs": 1795356693800,
+          "durationMs": 13,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356693820,
+          "endTs": 1795356693834,
+          "durationMs": 14,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356696154,
+          "endTs": 1795356696165,
+          "durationMs": 11,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        },
+        {
+          "startTs": 1795356696873,
+          "endTs": 1795356696885,
+          "durationMs": 12,
+          "failureCount": 3,
+          "byType": {
+            "network": 0,
+            "timeout": 3,
+            "server": 0,
+            "client": 0
+          },
+          "ongoing": false
+        }
+      ],
+      "downtimeMs": 151,
+      "warnings": [
+        "dropped"
+      ]
+    }
+  }
+]

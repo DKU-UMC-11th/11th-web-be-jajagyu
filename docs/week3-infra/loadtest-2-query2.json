@@ -1,0 +1,133 @@
+[
+  {
+    "rps": 400,
+    "runId": "dd0359c6-f393-4601-b061-9bca68122117",
+    "start": 1795356022,
+    "end": 1795356065,
+    "summary": {
+      "runId": "dd0359c6-f393-4601-b061-9bca68122117",
+      "status": "finished",
+      "startedAt": 1795356022931,
+      "finishedAt": 1795356062947,
+      "scenarioName": "한계 측정 400rps",
+      "totals": {
+        "sent": 15988,
+        "success": 15988,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 1,
+        "dropped": 11
+      },
+      "percentiles": {
+        "p50": 14,
+        "p95": 52,
+        "p99": 430,
+        "max": 1067,
+        "count": 15988
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 3199,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 31
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": []
+    }
+  },
+  {
+    "rps": 600,
+    "runId": "771b8cb2-b193-456f-a09d-9bc8c163a910",
+    "start": 1795356095,
+    "end": 1795356137,
+    "summary": {
+      "runId": "771b8cb2-b193-456f-a09d-9bc8c163a910",
+      "status": "finished",
+      "startedAt": 1795356095388,
+      "finishedAt": 1795356135406,
+      "scenarioName": "한계 측정 600rps",
+      "totals": {
+        "sent": 23807,
+        "success": 23807,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 0,
+        "dropped": 192
+      },
+      "percentiles": {
+        "p50": 15,
+        "p95": 46,
+        "p99": 295,
+        "max": 695,
+        "count": 23807
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 4731,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 35
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": []
+    }
+  },
+  {
+    "rps": 800,
+    "runId": "81f1dbd6-23f8-4167-bcf9-d247b7afd7de",
+    "start": 1795356167,
+    "end": 1795356210,
+    "summary": {
+      "runId": "81f1dbd6-23f8-4167-bcf9-d247b7afd7de",
+      "status": "finished",
+      "startedAt": 1795356167866,
+      "finishedAt": 1795356207912,
+      "scenarioName": "한계 측정 800rps",
+      "totals": {
+        "sent": 25156,
+        "success": 25156,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 30,
+        "dropped": 6846
+      },
+      "percentiles": {
+        "p50": 19,
+        "p95": 65,
+        "p99": 353,
+        "max": 1371,
+        "count": 25156
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 6218,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 38
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": [
+        "dropped"
+      ]
+    }
+  }
+]

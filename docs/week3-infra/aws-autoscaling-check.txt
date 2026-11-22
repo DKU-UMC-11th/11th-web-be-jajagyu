@@ -1,0 +1,40 @@
+# ASG 설정 (umc3-asg)
+-------------------------------------------------------------
+|                 DescribeAutoScalingGroups                 |
++---------+--------+---------------+------+------+----------+
+| Desired | Grace  |  HealthCheck  | Max  | Min  | Warmup   |
++---------+--------+---------------+------+------+----------+
+|  3      |  180   |  ELB          |  3   |  1   |  120     |
++---------+--------+---------------+------+------+----------+
+
+# 조정 정책
+--------------------------------------------------------------------------------------
+|                                  DescribePolicies                                  |
++--------------------------+---------------------+---------+-------------------------+
+|          Metric          |       Policy        | Target  |          Type           |
++--------------------------+---------------------+---------+-------------------------+
+|  ASGAverageCPUUtilization|  umc3-cpu-tracking  |  60.0   |  TargetTrackingScaling  |
+|  mem_used_percent        |  umc3-mem-tracking  |  70.0   |  TargetTrackingScaling  |
++--------------------------+---------------------+---------+-------------------------+
+
+# 타겟 그룹 slow start
+------------------------------------------
+|      DescribeTargetGroupAttributes     |
++-------------------------------+--------+
+|              Key              | Value  |
++-------------------------------+--------+
+|  slow_start.duration_seconds  |  120   |
++-------------------------------+--------+
+
+# 스케일링 활동(최근 20건)
+2026-11-22T14:46:36.582000+00:00	Successful	Launching a new EC2 instance: i-00f565315657f4297
+2026-11-22T14:43:39.121000+00:00	Successful	Launching a new EC2 instance: i-026aa385cf806a70e
+2026-11-22T14:37:33.165000+00:00	Successful	Terminating EC2 instance: i-0b744ccade7b62e75
+2026-11-22T14:37:33.094000+00:00	Successful	Terminating EC2 instance: i-004c6850ec10593fb
+2026-11-22T14:30:27.341000+00:00	Successful	Launching a new EC2 instance: i-0b744ccade7b62e75
+2026-11-22T14:27:19.464000+00:00	Successful	Launching a new EC2 instance: i-004c6850ec10593fb
+2026-11-22T14:20:31.641000+00:00	Successful	Terminating EC2 instance: i-0fd669ba055df191b
+2026-11-22T14:20:31.519000+00:00	Successful	Terminating EC2 instance: i-0fbaf083d1e981f4a
+2026-11-22T14:12:23.532000+00:00	Successful	Launching a new EC2 instance: i-04579e4b092aeb653
+2026-11-22T14:09:25.967000+00:00	Successful	Launching a new EC2 instance: i-0fd669ba055df191b
+2026-11-22T13:41:21.438000+00:00	Successful	Launching a new EC2 instance: i-0fbaf083d1e981f4a

@@ -1,0 +1,47 @@
+[
+  {
+    "rps": 300,
+    "runId": "dacc620f-221a-4f02-b67d-e76bbf0c1934",
+    "start": 1795357364,
+    "end": 1795358207,
+    "summary": {
+      "runId": "dacc620f-221a-4f02-b67d-e76bbf0c1934",
+      "status": "finished",
+      "startedAt": 1795357364699,
+      "finishedAt": 1795358204670,
+      "scenarioName": "한계 측정 300rps",
+      "totals": {
+        "sent": 235316,
+        "success": 235316,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 1066,
+        "dropped": 16667
+      },
+      "percentiles": {
+        "p50": 23,
+        "p95": 75,
+        "p99": 382,
+        "max": 3578,
+        "count": 235316
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 2267,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 47
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": [
+        "dropped"
+      ]
+    }
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "rps": 200,
+    "runId": "d3508679-81d9-4737-889b-ef0143e2a3c3",
+    "start": 1795358350,
+    "end": 1795359132,
+    "summary": {
+      "runId": "d3508679-81d9-4737-889b-ef0143e2a3c3",
+      "status": "finished",
+      "startedAt": 1795358350399,
+      "finishedAt": 1795359130344,
+      "scenarioName": "한계 측정 200rps",
+      "totals": {
+        "sent": 150673,
+        "success": 150673,
+        "failure": 0,
+        "byType": {
+          "network": 0,
+          "timeout": 0,
+          "server": 0,
+          "client": 0
+        },
+        "slow": 125,
+        "dropped": 5311
+      },
+      "percentiles": {
+        "p50": 21,
+        "p95": 49,
+        "p99": 183,
+        "max": 1706,
+        "count": 150673
+      },
+      "baseline": {
+        "complete": true,
+        "sampleCount": 1598,
+        "failureRate": 0,
+        "clientFailureRate": 0,
+        "p95": 31
+      },
+      "outages": [],
+      "downtimeMs": 0,
+      "warnings": [
+        "dropped"
+      ]
+    }
+  }
+]
