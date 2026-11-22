@@ -1,7 +1,9 @@
 package com.umc.movie.service;
 
 import com.umc.movie.dto.EmailCheckResponse;
+import com.umc.movie.dto.MemberInfoResponse;
 import com.umc.movie.dto.MemberResponse;
+import com.umc.movie.dto.MemberUpdateRequest;
 import com.umc.movie.dto.NicknameCheckResponse;
 import com.umc.movie.dto.SignUpRequest;
 import com.umc.movie.entity.Member;
@@ -48,5 +50,29 @@ public class MemberService {
                 .build();
         Member saved = memberRepository.save(member);
         return new MemberResponse(saved.getMemberId(), saved.getEmail(), saved.getNickname());
+    }
+
+    @Transactional(readOnly = true)
+    public MemberInfoResponse getMyInfo(Long memberId) {
+        return MemberInfoResponse.from(findMember(memberId));
+    }
+
+    @Transactional
+    public MemberInfoResponse updateMyInfo(Long memberId, MemberUpdateRequest request) {
+        Member member = findMember(memberId);
+
+        // 나를 제외한 다른 회원이 그 닉네임을 쓰고 있다면 막는다. (내 닉네임 그대로는 허용)
+        // DB에도 UNIQUE 제약이 있지만, 정한 응답을 주려고 먼저 확인한다.
+        if (memberRepository.existsByNicknameAndMemberIdNot(request.nickname(), memberId)) {
+            throw new ApiException(HttpStatus.CONFLICT, "MEMBER409_1", "이미 사용 중인 닉네임입니다.");
+        }
+
+        member.updateNickname(request.nickname());
+        return MemberInfoResponse.from(member);
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "MEMBER404_1", "해당 회원을 찾을 수 없습니다."));
     }
 }
