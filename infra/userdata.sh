@@ -13,9 +13,12 @@ aws ecr get-login-password | docker login --username AWS --password-stdin ${IMAG
 docker pull $IMAGE
 docker stop -t 30 app 2>/dev/null || true   # graceful shutdown: 처리 중인 요청을 끝내고 종료
 docker rm app 2>/dev/null || true
+# 3주차: 풀 크기/연결 대기 시간은 선택 값. SSM 에 없으면 앱 기본값(10 / 30000ms)을 쓴다.
+o(){ aws ssm get-parameter --name /umc/$1 --query Parameter.Value --output text 2>/dev/null || true; }
+POOL=$(o db-pool-size); CTO=$(o db-conn-timeout)
 docker run -d --name app --restart always -p 8080:8080 \
   -e DB_URL="jdbc:mysql://$(p db-host):3306/$(p db-name)" -e DB_USER=$(p db-user) -e DB_PW=$(p db-password) \
-  -e JWT_SECRET=$(p jwt-secret) -e JWT_ACCESS_EXPIRATION=3600 $IMAGE
+  -e JWT_SECRET=$(p jwt-secret) -e JWT_ACCESS_EXPIRATION=3600 ${POOL:+-e DB_POOL_SIZE=$POOL} ${CTO:+-e DB_CONN_TIMEOUT=$CTO} $IMAGE
 for i in $(seq 1 60); do curl -sf localhost:8080/health >/dev/null && echo healthy && exit 0; sleep 2; done
 echo "health check failed"; exit 1
 SWAP
@@ -27,6 +30,7 @@ mkdir -p /opt/alloy /var/lib/alloy
 q(){ aws ssm get-parameter --region ap-northeast-2 --name "/umc/$1" --with-decryption --query Parameter.Value --output text 2>/dev/null || true; }
 export GC_FLEET_URL=$(q gc-fleet-url) GC_FLEET_USER=$(q gc-fleet-user) GC_TOKEN=$(q gc-token)
 export GCLOUD_RW_API_KEY="$GC_TOKEN" GC_PROM_URL=$(q gc-prom-url) GC_PROM_USER=$(q gc-prom-user) MYSQL_DSN=$(q mysql-dsn)
+export STACK=__PFX__   # 지표에 stack 라벨을 붙여 스택별로 거른다 (파이프라인의 external_labels 가 읽는다)
 export APP_METRICS_ADDR=127.0.0.1:8080 APP_METRICS_PATH=/actuator/prometheus   # Spring Boot 용 (03 파이프라인이 읽는다)
 cat > /opt/alloy/config.alloy <<'ALLOY'
 logging { level = "info" }
@@ -44,5 +48,19 @@ docker run -d --name alloy --restart unless-stopped --network host --pid host \
   -v /:/rootfs:ro -v /var/run/docker.sock:/var/run/docker.sock:ro \
   -v /opt/alloy/config.alloy:/etc/alloy/config.alloy:ro -v /var/lib/alloy:/var/lib/alloy \
   -e GC_FLEET_URL -e GC_FLEET_USER -e GC_TOKEN -e GC_PROM_URL -e GC_PROM_USER -e MYSQL_DSN \
-  -e GCLOUD_RW_API_KEY -e APP_METRICS_ADDR -e APP_METRICS_PATH \
+  -e GCLOUD_RW_API_KEY -e APP_METRICS_ADDR -e APP_METRICS_PATH -e STACK \
   grafana/alloy:v1.20.1 run --storage.path=/var/lib/alloy /etc/alloy/config.alloy >> /var/log/umc-alloy.log 2>&1 || true
+
+# 3주차 3.3.2: CloudWatch Agent — EC2 는 OS 안 메모리 사용률을 CloudWatch 에 보내지 않아서 에이전트가 필요하다.
+dnf install -y amazon-cloudwatch-agent >> /var/log/umc-cw.log 2>&1 || true
+cat > /opt/aws/amazon-cloudwatch-agent/etc/cw.json <<'JSON'
+{
+  "metrics": {
+    "namespace": "CWAgent",
+    "append_dimensions": { "AutoScalingGroupName": "${aws:AutoScalingGroupName}" },
+    "aggregation_dimensions": [["AutoScalingGroupName"]],
+    "metrics_collected": { "mem": { "measurement": ["mem_used_percent"], "metrics_collection_interval": 60 } }
+  }
+}
+JSON
+/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/cw.json >> /var/log/umc-cw.log 2>&1 || true

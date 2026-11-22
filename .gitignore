@@ -45,3 +45,6 @@ infra/**/.instance
 infra/**/.ip
 
 infra/.alb_dns
+infra/.ids.*
+infra/.alb_dns.*
+infra/.exporter_pw.*
